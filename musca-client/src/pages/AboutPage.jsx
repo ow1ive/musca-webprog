@@ -3,7 +3,7 @@ import Button from '../components/Button';
 const AboutPage = () => {
   return (
     <div className="flex w-full flex-col gap-0">
-      <section className="border-b border-zinc-900 bg-[#efefef] px-4 py-10 sm:px-6 lg:px-8">
+      <section className="border-b border-zinc-900 bg-white px-4 py-10 sm:px-6 lg:px-8">
         <div className="mx-auto grid w-full max-w-[1400px] gap-8 lg:grid-cols-[1fr_1fr] lg:items-center">
           <div>
             <p className="mb-3 text-[9px] font-semibold uppercase tracking-[0.28em] text-zinc-500">
@@ -35,7 +35,7 @@ const AboutPage = () => {
         </div>
       </section>
 
-      <section className="border-b border-zinc-900 bg-[#efefef] px-4 py-8 sm:px-6 lg:px-8">
+      <section className="border-b border-zinc-900 bg-white px-4 py-8 sm:px-6 lg:px-8">
         <div className="mx-auto mb-6 w-full max-w-[1400px]">
           <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-zinc-500">
             Snapshot
@@ -71,7 +71,7 @@ const AboutPage = () => {
         </div>
       </section>
 
-      <section className="border-b border-zinc-900 bg-[#efefef] px-4 py-8 sm:px-6 lg:px-8">
+      <section className="border-b border-zinc-900 bg-white px-4 py-8 sm:px-6 lg:px-8">
         <div className="mx-auto grid w-full max-w-[1400px] gap-5 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="space-y-4">
             <article className="rounded-2xl border border-zinc-700 bg-zinc-100 p-5">

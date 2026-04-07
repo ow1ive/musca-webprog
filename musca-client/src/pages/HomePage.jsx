@@ -1,9 +1,13 @@
 import Button from '../components/Button';
+import homePhoto1 from '../assets/image/home-photo1.png';
+import homePhoto2 from '../assets/image/home-photo2.png';
+import homePhoto3 from '../assets/image/home-photo3.png';
+import homePhoto4 from '../assets/image/home-photo4.png';
 
 const HomePage = () => {
   return (
     <div className="flex w-full flex-col gap-0">
-      <section className="border-b border-zinc-900 bg-[#efefef] px-4 py-10 sm:px-6 lg:px-8">
+      <section className="border-b border-zinc-900 bg-white px-4 py-10 sm:px-6 lg:px-8">
         <div className="mx-auto grid w-full max-w-[1400px] gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
           <div>
             <p className="mb-3 text-[9px] font-semibold uppercase tracking-[0.28em] text-zinc-500">
@@ -25,17 +29,17 @@ const HomePage = () => {
             </div>
           </div>
 
-          <figure className="overflow-hidden rounded-3xl border border-zinc-300 bg-zinc-100 shadow-[0_20px_50px_rgba(24,24,27,0.08)]">
+          <figure className="overflow-hidden rounded-3xl bg-zinc-100 shadow-[0_20px_50px_rgba(24,24,27,0.08)]">
             <img
-              src="https://images.unsplash.com/photo-1497215842964-222b430dc094?auto=format&fit=crop&w=1200&q=80"
+              src={homePhoto1}
               alt="Desk setup with laptop and planning boards"
-              className="h-[280px] w-full object-cover sm:h-[360px]"
+              className="h-auto w-full object-contain"
             />
           </figure>
         </div>
       </section>
 
-      <section className="border-b border-zinc-900 bg-[#efefef] px-4 py-8 sm:px-6 lg:px-8">
+      <section className="border-b border-zinc-900 bg-white px-4 py-8 sm:px-6 lg:px-8">
         <div className="mx-auto mb-5 w-full max-w-[1400px]">
           <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-zinc-500">
             Studio Metrics
@@ -71,7 +75,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      <section className="border-b border-zinc-900 bg-[#efefef] px-4 py-8 sm:px-6 lg:px-8">
+      <section className="border-b border-zinc-900 bg-white px-4 py-8 sm:px-6 lg:px-8">
         <div className="mx-auto mb-6 w-full max-w-[1400px]">
           <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-zinc-500">
             Core Services
@@ -82,7 +86,7 @@ const HomePage = () => {
         <div className="mx-auto grid w-full max-w-[1400px] gap-4 md:grid-cols-3">
           <article className="overflow-hidden rounded-2xl border border-zinc-700 bg-zinc-100">
             <img
-              src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=900&q=80"
+              src={homePhoto2}
               alt="Code editor with product interface"
               className="h-44 w-full object-cover"
             />
@@ -97,7 +101,7 @@ const HomePage = () => {
 
           <article className="overflow-hidden rounded-2xl border border-zinc-700 bg-zinc-100">
             <img
-              src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=80"
+              src={homePhoto3}
               alt="Team discussing product strategy"
               className="h-44 w-full object-cover"
             />
@@ -112,7 +116,7 @@ const HomePage = () => {
 
           <article className="overflow-hidden rounded-2xl border border-zinc-700 bg-zinc-100">
             <img
-              src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=900&q=80"
+              src={homePhoto4}
               alt="Creative planning board with sticky notes"
               className="h-44 w-full object-cover"
             />
