@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import muscaLogo from '../assets/musca-logo.svg';
+import Button from './Button';
 
 const links = [
   { label: 'Home', to: '/' },
@@ -36,16 +37,28 @@ const NavBar = () => {
             </NavLink>
           ))}
         </nav>
+
+        <div className="hidden md:block">
+          <Button to="/auth/signin" variant="primary" className="px-4 py-2 text-[10px] tracking-[0.2em]">
+            Log In
+          </Button>
+        </div>
       </div>
 
       <div className="border-t border-zinc-900/20 px-4 py-2 md:hidden">
-        <nav className="mx-auto flex w-full max-w-[1400px] items-center gap-1 rounded-full border border-zinc-900/25 bg-white/70 p-1">
-          {links.map((link) => (
-            <NavLink key={`mobile-${link.to}`} to={link.to} end={link.to === '/'} className={`${navLinkClassName} flex-1 text-center`}>
-              {link.label}
-            </NavLink>
-          ))}
-        </nav>
+        <div className="mx-auto flex w-full max-w-[1400px] flex-col gap-2">
+          <nav className="flex items-center gap-1 rounded-full border border-zinc-900/25 bg-white/70 p-1">
+            {links.map((link) => (
+              <NavLink key={`mobile-${link.to}`} to={link.to} end={link.to === '/'} className={`${navLinkClassName} flex-1 text-center`}>
+                {link.label}
+              </NavLink>
+            ))}
+          </nav>
+
+          <Button to="/auth/signin" variant="primary" className="w-full px-4 py-2 text-[10px] tracking-[0.2em]">
+            Log In
+          </Button>
+        </div>
       </div>
     </header>
   );
