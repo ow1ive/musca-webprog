@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Layout from './components/Layout';
 import ArticlePage from './pages/ArticlePage';
 import ArticleListPage from './pages/ArticleListPage';
+import AboutPage from './pages/AboutPage';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
 
@@ -20,7 +21,7 @@ const routes = [
       },
       {
         path: '/about',
-        element: <NotFoundPage />,
+        element: <AboutPage />,
       },
       {
         path: '/articles',
