@@ -5,7 +5,7 @@ import articleContent from '../assets/article-content';
 const ArticleListPage = () => {
   return (
     <div className="flex w-full flex-col gap-0">
-      <section className="border-b border-zinc-900 bg-white px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
+      <section className="border-b border-zinc-900 bg-white px-4 pt-6 pb-12 sm:px-6 sm:pt-8 sm:pb-14 lg:px-8">
         <div className="mx-auto w-full max-w-[1400px]">
           <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-zinc-500">Articles</p>
           <h1 className="mt-2 max-w-xl text-3xl font-bold leading-tight text-zinc-900 sm:text-4xl">
