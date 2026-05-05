@@ -1,6 +1,6 @@
 import Button from '../../components/Button';
 import ArticleList from '../../components/ArticleList';
-import articleContent from '../../assets/article-content';
+import articleContent from '../../data/article-content';
 
 const ArticleListPage = () => {
   return (

@@ -40,11 +40,11 @@ const summaryCards = [
 ];
 
 const recentActivity = [
-  { id: 1, user: 'Jon Snow',           initial: 'JS', action: 'Submitted a report',      time: '2 min ago',  status: 'success' },
-  { id: 2, user: 'Arya Stark',         initial: 'AS', action: 'Registered as new user',  time: '15 min ago', status: 'info'    },
-  { id: 3, user: 'Cersei Lannister',   initial: 'CL', action: 'Updated profile',         time: '1 hr ago',   status: 'warning' },
-  { id: 4, user: 'Daenerys Targaryen', initial: 'DT', action: 'Logged in',               time: '2 hr ago',   status: 'info'    },
-  { id: 5, user: 'Harvey Roxie',       initial: 'HR', action: 'Submitted a report',      time: '3 hr ago',   status: 'success' },
+  { id: 1, user: 'Celesse Aisle',           initial: 'CA', action: 'Submitted a report',      time: '2 min ago',  status: 'success' },
+  { id: 2, user: 'Len Alegre',         initial: 'LA', action: 'Registered as new user',  time: '15 min ago', status: 'info'    },
+  { id: 3, user: 'Marygail Angelique',   initial: 'MA', action: 'Updated profile',         time: '1 hr ago',   status: 'warning' },
+  { id: 4, user: 'Sophia Leigh', initial: 'SL', action: 'Logged in',               time: '2 hr ago',   status: 'info'    },
+  { id: 5, user: 'Glyza Bermudez',       initial: 'GB', action: 'Submitted a report',      time: '3 hr ago',   status: 'success' },
 ];
 
 const activityColumns = [
