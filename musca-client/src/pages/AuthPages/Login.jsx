@@ -63,7 +63,7 @@ const Login = () => {
         })
       );
 
-      navigate('/dashboard', {
+      navigate('/home', {
         replace: true,
         state: { firstName: data.firstName, type: data.type },
       });

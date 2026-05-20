@@ -99,7 +99,7 @@ const SignUpPage = () => {
         gender: gender.trim().toLowerCase(),
         contactNumber: contactNumber.trim(),
         email: normalizedEmail,
-        role: 'viewer',
+        role: 'editor',
         username: normalizedUsername,
         password,
         address: address.trim(),
@@ -113,11 +113,11 @@ const SignUpPage = () => {
           lastName: lastName.trim(),
           email: normalizedEmail,
           username: normalizedUsername,
-          role: 'viewer',
+          role: 'editor',
         }),
       );
 
-      setSuccess('Account created. You can now log in.');
+      setSuccess('Account created. Please log in.');
       navigate('/auth/signin', { replace: true });
     } catch (requestError) {
       setError(requestError?.response?.data?.message || 'Unable to create account. Please try again.');
