@@ -1,9 +1,10 @@
 import { useParams } from 'react-router-dom';
 import Button from '../../components/Button';
-import articles from '../../data/article-content.js';
+import { getDashboardArticles } from '../../data/articleStore';
 
 function ArticlePage() {
   const { name } = useParams();
+  const articles = getDashboardArticles();
   const article = articles.find((entry) => entry.name === name || entry.slug === name);
 
   if (!article) {

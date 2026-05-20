@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Button';
 import googleIcon from '../../assets/image/google.png';
 import appleIcon from '../../assets/image/apple.png';
+import { createUser } from '../../services/UserService';
 
 const AUTH_STORAGE_KEY = 'musca-auth-user';
 
@@ -33,21 +34,53 @@ const SignUpPage = () => {
   const navigate = useNavigate();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [username, setUsername] = useState('');
+  const [age, setAge] = useState('');
+  const [gender, setGender] = useState('female');
+  const [contactNumber, setContactNumber] = useState('');
+  const [address, setAddress] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setError('');
     setSuccess('');
 
     const normalizedEmail = email.trim().toLowerCase();
+    const normalizedUsername = username.trim().toLowerCase();
 
-    if (!firstName.trim() || !lastName.trim() || !normalizedEmail || !password.trim()) {
+    if (
+      !firstName.trim()
+      || !lastName.trim()
+      || !normalizedUsername
+      || !age.trim()
+      || !gender.trim()
+      || !contactNumber.trim()
+      || !address.trim()
+      || !normalizedEmail
+      || !password.trim()
+    ) {
       setError('Please complete all fields.');
+      return;
+    }
+
+    if (!/^\d+$/.test(age.trim())) {
+      setError('Age must contain numbers only.');
+      return;
+    }
+
+    if (!/^\d{11}$/.test(contactNumber.trim())) {
+      setError('Contact number must be exactly 11 digits.');
+      return;
+    }
+
+    if (/\s/.test(normalizedUsername)) {
+      setError('Username must not contain spaces.');
       return;
     }
 
@@ -56,18 +89,41 @@ const SignUpPage = () => {
       return;
     }
 
-    localStorage.setItem(
-      AUTH_STORAGE_KEY,
-      JSON.stringify({
+    try {
+      setLoading(true);
+
+      await createUser({
         firstName: firstName.trim(),
         lastName: lastName.trim(),
+        age: age.trim(),
+        gender: gender.trim().toLowerCase(),
+        contactNumber: contactNumber.trim(),
         email: normalizedEmail,
+        role: 'viewer',
+        username: normalizedUsername,
         password,
-      }),
-    );
+        address: address.trim(),
+        isActive: true,
+      });
 
-    setSuccess('Account created. You can now log in.');
-    navigate('/auth/signin', { replace: true });
+      localStorage.setItem(
+        AUTH_STORAGE_KEY,
+        JSON.stringify({
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
+          email: normalizedEmail,
+          username: normalizedUsername,
+          role: 'viewer',
+        }),
+      );
+
+      setSuccess('Account created. You can now log in.');
+      navigate('/auth/signin', { replace: true });
+    } catch (requestError) {
+      setError(requestError?.response?.data?.message || 'Unable to create account. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -110,6 +166,81 @@ const SignUpPage = () => {
               onChange={(event) => setLastName(event.target.value)}
             />
           </div>
+        </div>
+
+        <div className="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label htmlFor="signup-username" className="text-sm font-medium text-zinc-700">
+              Username
+            </label>
+            <input
+              id="signup-username"
+              type="text"
+              placeholder="Username"
+              autoComplete="username"
+              className={inputClasses}
+              value={username}
+              onChange={(event) => setUsername(event.target.value)}
+            />
+          </div>
+          <div>
+            <label htmlFor="signup-age" className="text-sm font-medium text-zinc-700">
+              Age
+            </label>
+            <input
+              id="signup-age"
+              type="text"
+              placeholder="Age"
+              className={inputClasses}
+              value={age}
+              onChange={(event) => setAge(event.target.value)}
+            />
+          </div>
+        </div>
+
+        <div className="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label htmlFor="signup-gender" className="text-sm font-medium text-zinc-700">
+              Gender
+            </label>
+            <select
+              id="signup-gender"
+              className={inputClasses}
+              value={gender}
+              onChange={(event) => setGender(event.target.value)}
+            >
+              <option value="female">Female</option>
+              <option value="male">Male</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div>
+            <label htmlFor="signup-contact" className="text-sm font-medium text-zinc-700">
+              Contact Number
+            </label>
+            <input
+              id="signup-contact"
+              type="text"
+              placeholder="0917xxxxxxx"
+              className={inputClasses}
+              value={contactNumber}
+              onChange={(event) => setContactNumber(event.target.value)}
+            />
+          </div>
+        </div>
+
+        <div>
+          <label htmlFor="signup-address" className="text-sm font-medium text-zinc-700">
+            Address
+          </label>
+          <textarea
+            id="signup-address"
+            rows={3}
+            placeholder="Address"
+            className={inputClasses}
+            value={address}
+            onChange={(event) => setAddress(event.target.value)}
+          />
         </div>
 
         <div>
@@ -155,8 +286,8 @@ const SignUpPage = () => {
           </p>
         </div>
 
-        <Button type="submit" variant="primary" className={actionButtonClassName}>
-          Create Account
+        <Button type="submit" variant="primary" className={actionButtonClassName} disabled={loading}>
+          {loading ? 'Creating...' : 'Create Account'}
         </Button>
 
         <div className="grid gap-3 pt-2 sm:grid-cols-2">

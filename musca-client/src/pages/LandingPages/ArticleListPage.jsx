@@ -1,8 +1,12 @@
+import { useMemo } from 'react';
+
 import Button from '../../components/Button';
 import ArticleList from '../../components/ArticleList';
-import articleContent from '../../data/article-content';
+import { getDashboardArticles } from '../../data/articleStore';
 
 const ArticleListPage = () => {
+  const articles = useMemo(() => getDashboardArticles(), []);
+
   return (
     <div className="flex w-full flex-col gap-0">
       <section className="border-b border-zinc-900 bg-white px-4 pt-6 pb-12 sm:px-6 sm:pt-8 sm:pb-14 lg:px-8">
@@ -30,7 +34,7 @@ const ArticleListPage = () => {
             <h2 className="mt-2 text-2xl font-semibold text-zinc-900">Article card grid</h2>
           </div>
 
-          <ArticleList articles={articleContent} />
+          <ArticleList articles={articles} />
         </div>
       </section>
     </div>

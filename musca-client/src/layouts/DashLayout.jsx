@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -21,6 +21,7 @@ import ListItemText from '@mui/material/ListItemText';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
 import AssessmentIcon from '@mui/icons-material/Assessment';
+import ArticleIcon from '@mui/icons-material/Article';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
@@ -43,18 +44,28 @@ const dashboardNavItems = [
     title: 'Dashboard',
     to: '/dashboard',
     icon: DashboardIcon,
+    allowedRoles: ['admin', 'editor', 'viewer'],
   },
   {
     label: 'Reports',
     title: 'Reports',
     to: '/dashboard/reports',
     icon: AssessmentIcon,
+    allowedRoles: ['admin', 'editor', 'viewer'],
+  },
+  {
+    label: 'Articles',
+    title: 'Articles',
+    to: '/dashboard/articles',
+    icon: ArticleIcon,
+    allowedRoles: ['admin', 'editor'],
   },
   {
     label: 'Users',
     title: 'Users',
     to: '/dashboard/users',
     icon: PeopleIcon,
+    allowedRoles: ['admin'],
   },
 ];
 
@@ -171,15 +182,36 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const getPageTitle = (pathname) =>
-  dashboardNavItems.find(({ to }) => to === pathname)?.title ?? 'Welcome';
+const getPageTitle = (pathname, navItems) =>
+  navItems.find(({ to }) => to === pathname)?.title ?? 'Welcome';
 
 const DashLayout = () => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const location = useLocation();
-  const pageTitle = getPageTitle(location.pathname);
   const navigate = useNavigate();
+
+  const role = String(localStorage.getItem('type') || '').toLowerCase();
+  const token = localStorage.getItem('token');
+
+  const allowedNavItems = useMemo(
+    () => dashboardNavItems.filter((item) => item.allowedRoles.includes(role || 'viewer')),
+    [role]
+  );
+
+  const pageTitle = getPageTitle(location.pathname, allowedNavItems);
+
+  useEffect(() => {
+    if (!token) {
+      navigate('/auth/signin', { replace: true });
+      return;
+    }
+
+    const activeItem = dashboardNavItems.find((item) => item.to === location.pathname);
+    if (activeItem && !activeItem.allowedRoles.includes(role || 'viewer')) {
+      navigate('/dashboard', { replace: true });
+    }
+  }, [location.pathname, navigate, role, token]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -190,7 +222,11 @@ const DashLayout = () => {
   };
 
   const handleLogout = () => {
-    navigate('/');
+    localStorage.removeItem('token');
+    localStorage.removeItem('type');
+    localStorage.removeItem('firstName');
+    localStorage.removeItem('musca-auth-user');
+    navigate('/auth/signin', { replace: true });
   };
 
   return (
@@ -256,7 +292,7 @@ const DashLayout = () => {
           </DrawerHeader>
           <Divider />
           <List>
-            {dashboardNavItems.map(({ label, to, icon: Icon }) => (
+            {allowedNavItems.map(({ label, to, icon: Icon }) => (
               <ListItem key={to} disablePadding sx={{ display: 'block' }}>
                 <ListItemButton
                   component={Link}
