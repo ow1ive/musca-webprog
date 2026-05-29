@@ -3,7 +3,7 @@ import axios from 'axios';
 import constants from '../constants';
 
 const API = axios.create({
-  baseURL: `${constants.HOST}/users`,
+  baseURL: `${constants.HOST}/api/users`,
 });
 
 export const fetchUsers = () => API.get('/');

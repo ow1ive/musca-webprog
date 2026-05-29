@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Button from '../../components/Button';
@@ -7,6 +7,7 @@ import appleIcon from '../../assets/image/apple.png';
 import { loginUser } from '../../services/UserService';
 
 const AUTH_STORAGE_KEY = 'musca-auth-user';
+const CREDENTIALS_STORAGE_KEY = 'musca-auth-credentials';
 
 const inputClasses =
   'mt-2 w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 text-sm text-zinc-900 outline-none transition placeholder:text-zinc-400 focus:border-zinc-900 focus:bg-white';
@@ -38,6 +39,19 @@ const Login = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(CREDENTIALS_STORAGE_KEY);
+      if (!raw) return;
+
+      const saved = JSON.parse(raw);
+      setEmail(String(saved?.email || ''));
+      setPassword(String(saved?.password || ''));
+    } catch {
+      localStorage.removeItem(CREDENTIALS_STORAGE_KEY);
+    }
+  }, []);
+
   const handleLogin = async (event) => {
     event.preventDefault();
     setError('');
@@ -48,6 +62,8 @@ const Login = () => {
         email: email.trim().toLowerCase(),
         password,
       };
+
+      localStorage.setItem(CREDENTIALS_STORAGE_KEY, JSON.stringify(credentials));
 
       const { data } = await loginUser(credentials);
 

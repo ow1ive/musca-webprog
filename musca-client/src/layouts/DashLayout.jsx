@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { toast } from 'react-toastify';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -204,6 +205,13 @@ const DashLayout = () => {
   useEffect(() => {
     if (!token) {
       navigate('/auth/signin', { replace: true });
+      return;
+    }
+
+    // Block 'basic' users from all dashboard routes
+    if (role === 'basic') {
+      toast.error('You do not have access to the dashboard.');
+      navigate('/home', { replace: true });
       return;
     }
 

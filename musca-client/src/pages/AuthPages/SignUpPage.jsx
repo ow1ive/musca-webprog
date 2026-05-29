@@ -7,6 +7,7 @@ import appleIcon from '../../assets/image/apple.png';
 import { createUser } from '../../services/UserService';
 
 const AUTH_STORAGE_KEY = 'musca-auth-user';
+const CREDENTIALS_STORAGE_KEY = 'musca-auth-credentials';
 
 const inputClasses =
   'mt-2 w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 text-sm text-zinc-900 outline-none transition placeholder:text-zinc-400 focus:border-zinc-900 focus:bg-white';
@@ -93,27 +94,35 @@ const SignUpPage = () => {
       setLoading(true);
 
       await createUser({
-        firstName: firstName.trim(),
-        lastName: lastName.trim(),
-        age: age.trim(),
-        gender: gender.trim().toLowerCase(),
-        contactNumber: contactNumber.trim(),
-        email: normalizedEmail,
-        role: 'editor',
-        username: normalizedUsername,
-        password,
-        address: address.trim(),
-        isActive: true,
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
+          age: age.trim(),
+          gender: gender.trim().toLowerCase(),
+          contactNumber: contactNumber.trim(),
+          email: normalizedEmail,
+          role: 'basic',
+          username: normalizedUsername,
+          password,
+          address: address.trim(),
+          isActive: true,
       });
 
       localStorage.setItem(
         AUTH_STORAGE_KEY,
         JSON.stringify({
-          firstName: firstName.trim(),
-          lastName: lastName.trim(),
+            firstName: firstName.trim(),
+            lastName: lastName.trim(),
+            email: normalizedEmail,
+            username: normalizedUsername,
+            role: 'basic',
+        }),
+      );
+
+      localStorage.setItem(
+        CREDENTIALS_STORAGE_KEY,
+        JSON.stringify({
           email: normalizedEmail,
-          username: normalizedUsername,
-          role: 'editor',
+          password,
         }),
       );
 
