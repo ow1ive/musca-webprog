@@ -1,4 +1,6 @@
 import Button from '../../components/Button';
+import aboutImage from '../../assets/image/about.png';
+import aboutImageTwo from '../../assets/image/about2.png';
 
 const AboutPage = () => {
   return (
@@ -27,7 +29,7 @@ const AboutPage = () => {
 
           <figure className="overflow-hidden rounded-3xl border border-zinc-300 bg-zinc-100 shadow-[0_20px_50px_rgba(24,24,27,0.08)]">
             <img
-              src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80"
+              src={aboutImage}
               alt="Creative team discussing website concepts"
               className="h-[280px] w-full object-cover sm:h-[360px]"
             />
@@ -99,7 +101,7 @@ const AboutPage = () => {
 
           <aside className="overflow-hidden rounded-2xl border border-zinc-700 bg-zinc-100">
             <img
-              src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=900&q=80"
+              src={aboutImageTwo}
               alt="Workshop session with collaborative planning"
               className="h-52 w-full object-cover"
             />
